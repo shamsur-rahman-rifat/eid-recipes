@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eid Recipes — Celebrate with Flavour</title>
+    <link rel="icon" href="https://img.icons8.com/?size=100&id=XzyqacXhyHsL&format=png&color=000000" type="image/png">
+    <meta name="description" content="Discover a curated collection of traditional Eid recipes, from aromatic Kacchi Biryani to sweet Shemai. Perfect for your festive celebrations!">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        eid: {
+                            green:     '#0f4c3a',
+                            light:     '#edf5f1',
+                            gold:      '#d4af37',
+                            goldlight: '#f9f1d8',
+                            dark:      '#121212',
+                            darker:    '#0a0a0a',
+                            card:      '#1e1e1e'
+                        }
+                    },
+                    fontFamily: {
+                        sans:  ['Poppins', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .hero-bg {
+            background-color: #0f4c3a;
+            background-image:
+                radial-gradient(circle at 80% 20%, rgba(212,175,55,.15) 0%, transparent 50%),
+                radial-gradient(circle at 20% 80%, rgba(212,175,55,.10) 0%, transparent 40%),
+                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Cpath d='M30 0L60 30L30 60L0 30Z' fill='none' stroke='%23d4af3715' stroke-width='1'/%3E%3C/svg%3E");
+        }
+        .dark .hero-bg { background-color: #0a0a0a; }
+
+        .glass-nav { background: rgba(255,255,255,.92); backdrop-filter: blur(12px); }
+        .dark .glass-nav { background: rgba(18,18,18,.92); }
+
+        .crescent {
+            width:130px; height:130px; border-radius:50%;
+            box-shadow: -26px 0 0 13px rgba(212,175,55,.18);
+            position:absolute; top:10%; right:8%; z-index:0;
+            animation: floatY 6s ease-in-out infinite;
+        }
+        @keyframes floatY { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-16px)} }
+
+        .recipe-card { transition: transform .35s ease, box-shadow .35s ease; }
+        .recipe-card:hover { transform: translateY(-8px); box-shadow: 0 24px 48px rgba(0,0,0,.15); }
+
+        .nav-link { position:relative; }
+        .nav-link::after { content:''; position:absolute; bottom:-3px; left:0; width:0; height:2px; background:#d4af37; border-radius:2px; transition:width .3s; }
+        .nav-link:hover::after { width:100%; }
+
+        .gold-bar { width:60px; height:3px; background:linear-gradient(90deg,#d4af37,#f9d56e,#d4af37); border-radius:2px; }
+
+        .step-circle { min-width:2.5rem; height:2.5rem; }
+
+        .ing-item::before { content:'◆'; color:#d4af37; margin-right:8px; font-size:.45rem; vertical-align:middle; }
+
+        .btn-gold { background:linear-gradient(135deg,#d4af37,#b8940a); transition:all .3s; }
+        .btn-gold:hover { background:linear-gradient(135deg,#f9d56e,#d4af37); transform:translateY(-2px); box-shadow:0 8px 20px rgba(212,175,55,.35); }
+
+        #mobile-menu { max-height:0; overflow:hidden; transition:max-height .4s ease, opacity .4s ease; opacity:0; }
+        #mobile-menu.open { max-height:320px; opacity:1; }
+
+        .detail-img { height:420px; object-fit:cover; }
+
+        ::-webkit-scrollbar { width:5px; }
+        ::-webkit-scrollbar-thumb { background:#d4af37; border-radius:3px; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 dark:bg-eid-dark dark:text-gray-100 transition-colors duration-300 font-sans">
+
+<nav class="glass-nav fixed w-full z-50 top-0 border-b border-gray-200 dark:border-gray-800 transition-all">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between h-20 items-center">
+
+            <a href="#home" class="flex items-center gap-1 select-none">
+                <span class="text-eid-gold text-3xl leading-none" style="font-family:'Playfair Display',serif;">☽</span>
+                <span class="font-serif font-bold text-2xl tracking-wide text-eid-green dark:text-white ml-1">Eid</span>
+                <span class="font-serif font-bold text-2xl tracking-wide text-eid-gold ml-1">Recipes</span>
+            </a>
+
+            <div class="hidden md:flex items-center gap-8">
+                <a href="#home"    class="nav-link text-gray-600 hover:text-eid-green dark:text-gray-300 dark:hover:text-eid-gold font-medium text-sm transition-colors">Home</a>
+                <a href="#recipes" class="nav-link text-gray-600 hover:text-eid-green dark:text-gray-300 dark:hover:text-eid-gold font-medium text-sm transition-colors">Recipes</a>
+                <a href="#about"   class="nav-link text-gray-600 hover:text-eid-green dark:text-gray-300 dark:hover:text-eid-gold font-medium text-sm transition-colors">About</a>
+                <button id="darkToggle" class="p-2 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-eid-gold hover:text-white transition-all duration-300 text-base">
+                    <span id="darkIcon">🌙</span>
+                </button>
+            </div>
+
+            <div class="md:hidden flex items-center gap-3">
+                <button id="darkToggleMobile" class="p-2 rounded-full bg-gray-100 dark:bg-gray-800 text-sm">
+                    <span id="darkIconMobile">🌙</span>
+                </button>
+                <button id="menuBtn" class="text-gray-600 dark:text-gray-300 p-2">
+                    <svg id="iconOpen"  class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+                    <svg id="iconClose" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+            </div>
+        </div>
+
+        <div id="mobile-menu">
+            <div class="py-3 space-y-1 border-t border-gray-100 dark:border-gray-800">
+                <a href="/"    class="block px-4 py-2 rounded-lg text-gray-700 dark:text-gray-200 hover:bg-eid-light dark:hover:bg-gray-800 hover:text-eid-green dark:hover:text-eid-gold transition-colors text-sm font-medium">Home</a>
+                <a href="#recipes" class="block px-4 py-2 rounded-lg text-gray-700 dark:text-gray-200 hover:bg-eid-light dark:hover:bg-gray-800 hover:text-eid-green dark:hover:text-eid-gold transition-colors text-sm font-medium">Recipes</a>
+                <a href="#about"   class="block px-4 py-2 rounded-lg text-gray-700 dark:text-gray-200 hover:bg-eid-light dark:hover:bg-gray-800 hover:text-eid-green dark:hover:text-eid-gold transition-colors text-sm font-medium">About</a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<section id="home" class="hero-bg relative pt-20 pb-0 overflow-hidden min-h-screen flex items-center">
+    <div class="crescent hidden md:block"></div>
+    <div class="absolute top-32 right-1/3 text-eid-gold/50 text-xl animate-pulse hidden md:block">★</div>
+    <div class="absolute top-48 right-1/4 text-eid-gold/30 text-sm animate-pulse hidden md:block" style="animation-delay:.8s">★</div>
+    <div class="absolute top-24 left-1/4 text-eid-gold/40 text-base animate-pulse hidden md:block" style="animation-delay:1.4s">★</div>
+
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+        <div class="flex flex-col md:flex-row items-center gap-12 py-16 md:py-24">
+
+            <div class="w-full md:w-1/2 text-center md:text-left">
+                <span class="inline-block py-1.5 px-4 rounded-full bg-eid-gold/20 border border-eid-gold/30 text-eid-gold font-semibold text-xs mb-5 tracking-widest uppercase">Festive Specials</span>
+                <h1 class="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6">
+                    Eid Mubarak!<br>
+                    <span class="text-eid-gold italic">Delicious Recipes</span><br>
+                    <span class="text-3xl md:text-4xl font-normal text-gray-200">For Your Celebration</span>
+                </h1>
+                <p class="text-gray-300 text-base md:text-lg font-light mb-8 max-w-lg mx-auto md:mx-0 leading-relaxed">
+                    From aromatic Kacchi Biryani to silky Firni — discover beloved traditional recipes that bring families together on the most joyful days of the year.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+                    <a href="#recipes" class="btn-gold text-white font-semibold px-8 py-3.5 rounded-full shadow-lg text-sm text-center">Explore Recipes ↓</a>
+                    <a href="#about"   class="border-2 border-white/30 text-white hover:bg-white/10 font-medium px-8 py-3.5 rounded-full transition-all duration-300 text-sm text-center">Our Story →</a>
+                </div>
+            </div>
+
+            <div class="w-full md:w-1/2 flex justify-center">
+                <div class="relative w-72 h-72 md:w-96 md:h-96">
+                    <div class="absolute inset-0 rounded-full border-2 border-dashed border-eid-gold/40 animate-[spin_30s_linear_infinite]"></div>
+                    <div class="absolute inset-4 rounded-full bg-gradient-to-br from-eid-green via-emerald-800 to-green-900 dark:from-gray-900 dark:via-black dark:to-gray-950 border-4 border-eid-gold/60 shadow-2xl flex flex-col items-center justify-center">
+                        <div class="text-7xl mb-2">🍽️</div>
+                        <p class="text-eid-gold font-serif font-bold text-lg">Eid Mubarak</p>
+                        <p class="text-gray-300 text-xs mt-1 italic">عيد مبارك</p>
+                    </div>
+                    <div class="absolute bg-white dark:bg-eid-card rounded-2xl px-3 py-2 shadow-xl text-center hidden md:block overflow-hidden w-20" style="top: calc(50% - 113px - 48px); left: calc(50% - 113px - 70px);">
+                        <div class="text-2xl">🍲</div>
+                        <p class="text-xs font-semibold text-eid-green dark:text-eid-gold mt-1">Biryani</p>
+                    </div>
+                    <div class="absolute bg-white dark:bg-eid-card rounded-2xl px-3 py-2 shadow-xl text-center hidden md:block overflow-hidden w-20" style="top: calc(50% + 113px - 10px); left: calc(50% - 113px - 70px);">
+                        <div class="text-2xl">🥣</div>
+                        <p class="text-xs font-semibold text-eid-green dark:text-eid-gold mt-1">Dessert</p>
+                    </div>
+                    <div class="absolute bg-white dark:bg-eid-card rounded-2xl px-3 py-2 shadow-xl text-center hidden md:block overflow-hidden w-20" style="top: calc(50% + 113px - 10px); left: calc(50% + 113px - 10px);">
+                        <div class="text-2xl">🍗</div>
+                        <p class="text-xs font-semibold text-eid-green dark:text-eid-gold mt-1">Chicken</p>
+                    </div>
+                    <div class="absolute bg-white dark:bg-eid-card rounded-2xl px-3 py-2 shadow-xl text-center hidden md:block overflow-hidden w-20" style="top: calc(50% - 113px - 48px); left: calc(50% + 113px - 10px);">
+                        <div class="text-2xl">🥩</div>
+                        <p class="text-xs font-semibold text-eid-green dark:text-eid-gold mt-1">Beef</p>
+                    </div>                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="absolute bottom-0 w-full">
+        <svg viewBox="0 0 1200 80" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" class="block w-full">
+            <path d="M0,40 C300,80 900,0 1200,40 L1200,80 L0,80Z" class="fill-gray-50 dark:fill-eid-dark transition-colors duration-300"/>
+        </svg>
+    </div>
+</section>
+
+<section id="recipes" class="py-20 md:py-28">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+ 
+        <div class="text-center mb-14">
+            <p class="text-eid-green dark:text-eid-gold font-semibold tracking-widest uppercase text-sm mb-2">Festive Menu</p>
+            <h2 class="font-serif text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">Must-Have Eid Dishes</h2>
+            <div class="gold-bar mx-auto mb-5"></div>
+            <p class="text-gray-500 dark:text-gray-400 max-w-xl mx-auto text-sm">Traditional recipes passed down through generations to make your celebration complete and completely delicious.</p>
+        </div>
+ 
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+ 
+            <article class="recipe-card bg-white dark:bg-eid-card rounded-2xl overflow-hidden shadow-md border border-gray-100 dark:border-gray-800 flex flex-col">
+                <div class="relative h-52 overflow-hidden bg-gradient-to-br from-amber-900 to-orange-950 flex items-center justify-center">
+                    <img
+                        src="https://images.unsplash.com/photo-1631515243349-e0cb75fb8d3a?w=800&auto=format&fit=crop&q=80"
+                        alt="Kacchi Biryani"
+                        class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                        onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+                    >
+                    <div class="absolute inset-0 hidden items-center justify-center text-7xl bg-gradient-to-br from-amber-900 to-orange-950">🍖</div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                    <span class="absolute bottom-3 left-3 bg-eid-gold text-eid-darker text-xs font-bold px-3 py-1 rounded-full">Main Dish</span>
+                </div>
+                <div class="p-5 flex-1 flex flex-col">
+                    <h3 class="font-serif text-xl font-bold text-gray-900 dark:text-white mb-2">Kacchi Biryani</h3>
+                    <p class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed mb-5 flex-1">Tender marinated mutton slow-cooked on dum with fragrant basmati rice, saffron, and whole spices — the crown jewel of Eid.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs text-gray-400 flex items-center gap-1">⏱ 3–4 hrs</span>
+                        <a href="#detail-kacchi" class="btn-gold text-white text-xs font-semibold px-4 py-2 rounded-full">View Details →</a>
+                    </div>
+                </div>
+            </article>
+ 
+            <article class="recipe-card bg-white dark:bg-eid-card rounded-2xl overflow-hidden shadow-md border border-gray-100 dark:border-gray-800 flex flex-col">
+                <div class="relative h-52 overflow-hidden">
+                    <img
+                        src="https://images.unsplash.com/photo-1545247181-516773cae754?w=800&auto=format&fit=crop&q=80"
+                        alt="Beef Rezala"
+                        class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                        onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+                    >
+                    <div class="absolute inset-0 hidden items-center justify-center text-7xl bg-gradient-to-br from-stone-800 to-red-950">🥩</div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                    <span class="absolute bottom-3 left-3 bg-eid-gold text-eid-darker text-xs font-bold px-3 py-1 rounded-full">Main Dish</span>
+                </div>
+                <div class="p-5 flex-1 flex flex-col">
+                    <h3 class="font-serif text-xl font-bold text-gray-900 dark:text-white mb-2">Beef Rezala</h3>
+                    <p class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed mb-5 flex-1">A Mughal-era delicacy — beef simmered in a silky white yoghurt-poppy seed gravy perfumed with kewra and mace.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs text-gray-400 flex items-center gap-1">⏱ 2 hrs</span>
+                        <a href="#detail-rezala" class="btn-gold text-white text-xs font-semibold px-4 py-2 rounded-full">View Details →</a>
+                    </div>
+                </div>
+            </article>
+ 
+            <article class="recipe-card bg-white dark:bg-eid-card rounded-2xl overflow-hidden shadow-md border border-gray-100 dark:border-gray-800 flex flex-col">
+                <div class="relative h-52 overflow-hidden">
+                    <img
+                        src="https://plus.unsplash.com/premium_photo-1661419883163-bb4df1c10109?w=800&auto=format&fit=crop&q=80"
+                        alt="Chicken Roast"
+                        class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                        onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+                    >
+                    <div class="absolute inset-0 hidden items-center justify-center text-7xl bg-gradient-to-br from-orange-800 to-amber-900">🍗</div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                    <span class="absolute bottom-3 left-3 bg-eid-gold text-eid-darker text-xs font-bold px-3 py-1 rounded-full">Main Dish</span>
+                </div>
+                <div class="p-5 flex-1 flex flex-col">
+                    <h3 class="font-serif text-xl font-bold text-gray-900 dark:text-white mb-2">Chicken Roast</h3>
+                    <p class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed mb-5 flex-1">Golden, juicy chicken pieces roasted in a thick, sweet and savory traditional masala mix — a crowd-pleasing Eid classic.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs text-gray-400 flex items-center gap-1">⏱ 1.5 hrs</span>
+                        <a href="#detail-chicken" class="btn-gold text-white text-xs font-semibold px-4 py-2 rounded-full">View Details →</a>
+                    </div>
+                </div>
+            </article>
+ 
+            <article class="recipe-card bg-white dark:bg-eid-card rounded-2xl overflow-hidden shadow-md border border-gray-100 dark:border-gray-800 flex flex-col">
+                <div class="relative h-52 overflow-hidden">
+                    <img
+                        src="https://images.unsplash.com/photo-1722032393693-691b59565eaf?w=800&auto=format&fit=crop&q=80"
+                        alt="Shemai"
+                        class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                        onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+                    >
+                    <div class="absolute inset-0 hidden items-center justify-center text-7xl bg-gradient-to-br from-amber-100 to-amber-300">🍜</div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                    <span class="absolute bottom-3 left-3 bg-eid-gold text-eid-darker text-xs font-bold px-3 py-1 rounded-full">Dessert</span>
+                </div>
+                <div class="p-5 flex-1 flex flex-col">
+                    <h3 class="font-serif text-xl font-bold text-gray-900 dark:text-white mb-2">Shemai</h3>
+                    <p class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed mb-5 flex-1">Sweet vermicelli cooked in rich milk with cardamom, rose water, and ghee-fried nuts — the beloved Eid morning tradition.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs text-gray-400 flex items-center gap-1">⏱ 30 mins</span>
+                        <a href="#detail-shemai" class="btn-gold text-white text-xs font-semibold px-4 py-2 rounded-full">View Details →</a>
+                    </div>
+                </div>
+            </article>
+ 
+            <article class="recipe-card bg-white dark:bg-eid-card rounded-2xl overflow-hidden shadow-md border border-gray-100 dark:border-gray-800 flex flex-col">
+                <div class="relative h-52 overflow-hidden">
+                    <img
+                        src="https://images.unsplash.com/photo-1590055619273-44b5b6ce52e8?w=800&auto=format&fit=crop&q=80"
+                        alt="Firni"
+                        class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                        onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+                    >
+                    <div class="absolute inset-0 hidden items-center justify-center text-7xl bg-gradient-to-br from-amber-50 to-yellow-100">🥣</div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                    <span class="absolute bottom-3 left-3 bg-eid-gold text-eid-darker text-xs font-bold px-3 py-1 rounded-full">Dessert</span>
+                </div>
+                <div class="p-5 flex-1 flex flex-col">
+                    <h3 class="font-serif text-xl font-bold text-gray-900 dark:text-white mb-2">Firni</h3>
+                    <p class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed mb-5 flex-1">A silky chilled rice pudding infused with saffron and rose water, set in earthen bowls and garnished with crushed pistachios.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs text-gray-400 flex items-center gap-1">⏱ 1 hr + chill</span>
+                        <a href="#detail-firni" class="btn-gold text-white text-xs font-semibold px-4 py-2 rounded-full">View Details →</a>
+                    </div>
+                </div>
+            </article>
+ 
+            <div class="recipe-card bg-gradient-to-br from-eid-green to-emerald-900 dark:from-gray-900 dark:to-gray-950 rounded-2xl p-8 flex flex-col items-center justify-center text-center shadow-md">
+                <div class="text-5xl mb-4">✉️</div>
+                <h3 class="font-serif text-2xl font-bold text-white mb-2">Want More Recipes?</h3>
+                <p class="text-gray-300 text-sm mb-6 leading-relaxed">Have a special Eid dish you'd love to see here? Drop me a message and I'll add it to the collection!</p>
+                <a href="mailto:shamsur30rahman@gmail.com"
+                   class="btn-gold text-white font-semibold px-6 py-2.5 rounded-full text-sm shadow inline-flex items-center gap-2">
+                    📩 Contact Me
+                </a>
+            </div>
+ 
+        </div>
+    </div>
+</section>
+ 
+ 
+<section id="detail-kacchi" class="py-20 bg-white dark:bg-eid-darker border-y border-gray-100 dark:border-gray-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <span class="text-eid-gold font-semibold text-sm uppercase tracking-widest">Recipe Detail</span>
+            <h2 class="font-serif text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mt-2 mb-3">Kacchi Biryani</h2>
+            <div class="gold-bar mx-auto"></div>
+        </div>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+            <div>
+                <div class="rounded-3xl overflow-hidden shadow-2xl h-80 bg-gradient-to-br from-amber-900 to-orange-950 relative flex items-center justify-center">
+                    <img src="https://images.unsplash.com/photo-1631515243349-e0cb75fb8d3a?w=1200&auto=format&fit=crop&q=85"
+                         alt="Kacchi Biryani" class="detail-img w-full h-full object-cover"
+                         onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
+                    <div class="text-8xl hidden">🍖</div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                    <span class="absolute bottom-4 left-4 bg-eid-gold text-eid-darker text-xs font-bold px-3 py-1 rounded-full">Main Dish</span>
+                </div>
+                <div class="grid grid-cols-3 gap-4 mt-5">
+                    <div class="bg-gray-50 dark:bg-gray-800 rounded-2xl p-4 text-center shadow-sm"><p class="text-xl mb-1">⏱</p><p class="font-semibold text-sm text-gray-800 dark:text-white">3–4 hrs</p><p class="text-gray-400 text-xs">Cook Time</p></div>
+                    <div class="bg-gray-50 dark:bg-gray-800 rounded-2xl p-4 text-center shadow-sm"><p class="text-xl mb-1">👥</p><p class="font-semibold text-sm text-gray-800 dark:text-white">6–8</p><p class="text-gray-400 text-xs">Servings</p></div>
+                    <div class="bg-gray-50 dark:bg-gray-800 rounded-2xl p-4 text-center shadow-sm"><p class="text-xl mb-1">🌶</p><p class="font-semibold text-sm text-gray-800 dark:text-white">Medium</p><p class="text-gray-400 text-xs">Spice</p></div>
+                </div>
+                <div class="mt-7">
+                    <h4 class="font-serif text-2xl font-bold text-gray-900 dark:text-white mb-4">Ingredients</h4>
+                    <div class="bg-eid-light dark:bg-gray-800 rounded-2xl p-6 grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        <p class="ing-item text-gray-600 dark:text-gray-300 text-sm py-1 border-b border-gray-200 dark:border-gray-700">1 kg mutton (bone-in)</p>
+                        <p class="ing-item text-gray-600 dark:text-gray-300 text-sm py-1 border-b border-gray-200 dark:border-gray-700">500g basmati rice</p>
+                        <p class="ing-item text-gray-600 dark:text-gray-300 text-sm py-1 border-b border-gray-200 dark:border-gray-700">1 cup full-fat yoghurt</p>
+                        <p class="ing-item text-gray-600 dark:text-gray-300 text-sm py-1 border-b border-gray-200 dark:border-gray-700">4 large potatoes</p>
+                        <p class="ing-item text-gray-600 dark:text-gray-300 text-sm py-1 border-b border-gray-200 dark:border-gray-700">2 cups fried onions</p>
+                        <p class="ing-item text-gray-600 dark:text-gray-300 text-sm py-1 border-b border-gray-200 dark:border-gray-700">2 tbsp ginger-garlic paste</p>
+                        <p class="ing-item text-gray-600 dark:text-gray-300 text-sm py-1 border-b border-gray-200 dark:border-gray-700">½ cup ghee</p>
+                        <p class="ing-item text-gray-600 dark:text-gray-300 text-sm py-1 border-b border-gray-200 dark:border-gray-700">½ tsp saffron + warm milk</p>
+                        <p class="ing-item text-gray-600 dark:text-gray-300 text-sm py-1 border-b border-gray-200 dark:border-gray-700">Whole spices (bay, cinnamon, cardamom, clove)</p>
+                        <p class="ing-item text-gray-600 dark:text-gray-300 text-sm py-1">Kewra water, salt to taste</p>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <h4 class="font-serif text-2xl font-bold text-gray-900 dark:text-white mb-6">Step-by-Step Instructions</h4>
+                <ol class="space-y-5">
+                    <li class="flex gap-4"><div class="step-circle rounded-full bg-eid-gold text-eid-darker font-bold text-sm flex items-center justify-center shrink-0">1</div><div class="bg-gray-50 dark:bg-gray-800 rounded-2xl p-4 flex-1"><h5 class="font-semibold text-gray-800 dark:text-white text-sm mb-1">Marinate Overnight</h5><p class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed">Combine mutton with yoghurt, ginger-garlic paste, biryani masala, salt, and half the fried onions. Marinate for at least 4 hours (overnight preferred).</p></div></li>
+                    <li class="flex gap-4"><div class="step-circle rounded-full bg-eid-gold text-eid-darker font-bold text-sm flex items-center justify-center shrink-0">2</div><div class="bg-gray-50 dark:bg-gray-800 rounded-2xl p-4 flex-1"><h5 class="font-semibold text-gray-800 dark:text-white text-sm mb-1">Fry Potatoes & Parboil Rice</h5><p class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed">Fry potatoes golden. Soak basmati rice 30 minutes, then boil in salted water with whole spices until 70% done. Drain well.</p></div></li>
+                    <li class="flex gap-4"><div class="step-circle rounded-full bg-eid-gold text-eid-darker font-bold text-sm flex items-center justify-center shrink-0">3</div><div class="bg-gray-50 dark:bg-gray-800 rounded-2xl p-4 flex-1"><h5 class="font-semibold text-gray-800 dark:text-white text-sm mb-1">Layer the Pot</h5><p class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed">Spread marinated raw mutton at the base, place fried potatoes on top, then layer parboiled rice. Drizzle saffron milk, ghee, kewra, and remaining fried onions.</p></div></li>
+                    <li class="flex gap-4"><div class="step-circle rounded-full bg-eid-gold text-eid-darker font-bold text-sm flex items-center justify-center shrink-0">4</div><div class="bg-gray-50 dark:bg-gray-800 rounded-2xl p-4 flex-1"><h5 class="font-semibold text-gray-800 dark:text-white text-sm mb-1">Dum Cooking</h5><p class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed">Seal the pot tightly with dough or foil. Cook on high for 10 min, then reduce to lowest flame. Dum cook 45–60 minutes until mutton is tender.</p></div></li>
+                    <li class="flex gap-4"><div class="step-circle rounded-full bg-eid-gold text-eid-darker font-bold text-sm flex items-center justify-center shrink-0">5</div><div class="bg-gray-50 dark:bg-gray-800 rounded-2xl p-4 flex-1"><h5 class="font-semibold text-gray-800 dark:text-white text-sm mb-1">Rest & Serve</h5><p class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed">Open seal gently. Rest 10 minutes before serving. Plate carefully keeping layers intact. Serve hot with raita and boiled eggs.</p></div></li>
+                </ol>
+                <div class="mt-7 border-l-4 border-eid-gold bg-eid-goldlight dark:bg-eid-gold/10 rounded-r-2xl p-5">
+                    <p class="text-eid-green dark:text-eid-gold font-semibold text-sm mb-1">💡 Chef's Tip</p>
+                    <p class="text-gray-600 dark:text-gray-300 text-sm">Place a tawa (griddle) under the pot during dum to prevent scorching — the secret to a perfectly cooked kacchi every time.</p>
+                </div>
+                <div class="mt-5 text-right">
+                    <a href="#recipes" class="text-eid-gold hover:text-eid-green text-sm font-medium transition-colors">← Back to all recipes</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+ 
+<section id="detail-rezala" class="py-20 bg-gray-50 dark:bg-eid-dark border-b border-gray-100 dark:border-gray-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <span class="text-eid-gold font-semibold text-sm uppercase tracking-widest">Recipe Detail</span>
+            <h2 class="font-serif text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mt-2 mb-3">Beef Rezala</h2>
+            <div class="gold-bar mx-auto"></div>
+        </div>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+            <div>
+                <div class="rounded-3xl overflow-hidden shadow-2xl h-80 bg-gradient-to-br from-stone-800 to-red-950 relative flex items-center justify-center">
+                    <img src="https://images.unsplash.com/photo-1545247181-516773cae754?w=1200&auto=format&fit=crop&q=85"
+                         alt="Beef Rezala" class="detail-img w-full h-full object-cover"
+                         onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
+                    <div class="text-8xl hidden">🥩</div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                </div>
+                <div class="grid grid-cols-3 gap-4 mt-5">
+                    <div class="bg-white dark:bg-gray-800 rounded-2xl p-4 text-center shadow-sm"><p class="text-xl mb-1">⏱</p><p class="font-semibold text-sm text-gray-800 dark:text-white">2 hrs</p><p class="text-gray-400 text-xs">Cook Time</p></div>
+                    <div class="bg-white dark:bg-gray-800 rounded-2xl p-4 text-center shadow-sm"><p class="text-xl mb-1">👥</p><p class="font-semibold text-sm text-gray-800 dark:text-white">4–6</p><p class="text-gray-400 text-xs">Servings</p></div>
+                    <div class="bg-white dark:bg-gray-800 rounded-2xl p-4 text-center shadow-sm"><p class="text-xl mb-1">🌿</p><p class="font-semibold text-sm text-gray-800 dark:text-white">Mild</p><p class="text-gray-400 text-xs">Spice</p></div>
+                </div>
+                <div class="mt-7">
+                    <h4 class="font-serif text-2xl font-bold text-gray-900 dark:text-white mb-4">Ingredients</h4>
+                    <div class="bg-eid-light dark:bg-gray-800 rounded-2xl p-6 grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        <p class="ing-item text-gray-600 dark:text-gray-300 text-sm py-1 border-b border-gray-200 dark:border-gray-700">1 kg beef (boneless)</p>
+                        <p class="ing-item text-gray-600 dark:text-gray-300 text-sm py-1 border-b border-gray-200 dark:border-gray-700">1.5 cups yoghurt</p>
+                        <p class="ing-item text-gray-600 dark:text-gray-300 text-sm py-1 border-b border-gray-200 dark:border-gray-700">3 tbsp poppy seed paste</p>
+                        <p class="ing-item text-gray-600 dark:text-gray-300 text-sm py-1 border-b border-gray-200 dark:border-gray-700">2 onions, sliced</p>
+                        <p class="ing-item text-gray-600 dark:text-gray-300 text-sm py-1 border-b border-gray-200 dark:border-gray-700">4–6 green chillies</p>
+                        <p class="ing-item text-gray-600 dark:text-gray-300 text-sm py-1 border-b border-gray-200 dark:border-gray-700">½ tsp mace + nutmeg</p>
+                        <p class="ing-item text-gray-600 dark:text-gray-300 text-sm py-1 border-b border-gray-200 dark:border-gray-700">½ cup ghee</p>
+                        <p class="ing-item text-gray-600 dark:text-gray-300 text-sm py-1">Kewra water, white pepper, salt</p>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <h4 class="font-serif text-2xl font-bold text-gray-900 dark:text-white mb-6">Instructions</h4>
+                <ol class="space-y-5">
+                    <li class="flex gap-4"><div class="step-circle rounded-full bg-eid-gold text-eid-darker font-bold text-sm flex items-center justify-center shrink-0">1</div><div class="bg-white dark:bg-gray-800 rounded-2xl p-4 flex-1"><h5 class="font-semibold text-gray-800 dark:text-white text-sm mb-1">Marinate Beef</h5><p class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed">Mix beef with yoghurt, poppy seed paste, ginger-garlic, white pepper, and salt. Let rest for at least 2 hours.</p></div></li>
+                    <li class="flex gap-4"><div class="step-circle rounded-full bg-eid-gold text-eid-darker font-bold text-sm flex items-center justify-center shrink-0">2</div><div class="bg-white dark:bg-gray-800 rounded-2xl p-4 flex-1"><h5 class="font-semibold text-gray-800 dark:text-white text-sm mb-1">Fry Onions & Add Whole Spices</h5><p class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed">Heat ghee in a heavy pot, fry onions until golden. Add cardamom, cloves, bay leaf, and mace. Sauté 1 minute.</p></div></li>
+                    <li class="flex gap-4"><div class="step-circle rounded-full bg-eid-gold text-eid-darker font-bold text-sm flex items-center justify-center shrink-0">3</div><div class="bg-white dark:bg-gray-800 rounded-2xl p-4 flex-1"><h5 class="font-semibold text-gray-800 dark:text-white text-sm mb-1">Cook the Beef</h5><p class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed">Add marinated beef and cook on medium heat, stirring occasionally, until beef releases its juices and the gravy thickens, about 45 minutes.</p></div></li>
+                    <li class="flex gap-4"><div class="step-circle rounded-full bg-eid-gold text-eid-darker font-bold text-sm flex items-center justify-center shrink-0">4</div><div class="bg-white dark:bg-gray-800 rounded-2xl p-4 flex-1"><h5 class="font-semibold text-gray-800 dark:text-white text-sm mb-1">Simmer & Finish</h5><p class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed">Add green chillies and a splash of kewra water. Simmer on low for another 20 minutes until oil floats on top. Serve with naan or rice.</p></div></li>
+                </ol>
+                <div class="mt-7 border-l-4 border-eid-gold bg-eid-goldlight dark:bg-eid-gold/10 rounded-r-2xl p-5">
+                    <p class="text-eid-green dark:text-eid-gold font-semibold text-sm mb-1">💡 Chef's Tip</p>
+                    <p class="text-gray-600 dark:text-gray-300 text-sm">Rezala should have a pale, creamy white-to-golden gravy. Avoid using red chillies or turmeric — the colour comes from ghee and yoghurt only.</p>
+                </div>
+                <div class="mt-5 text-right"><a href="#recipes" class="text-eid-gold hover:text-eid-green text-sm font-medium transition-colors">← Back to all recipes</a></div>
+            </div>
+        </div>
+    </div>
+</section>
+ 
+<section id="detail-chicken" class="py-20 bg-white dark:bg-eid-darker border-b border-gray-100 dark:border-gray-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <span class="text-eid-gold font-semibold text-sm uppercase tracking-widest">Recipe Detail</span>
+            <h2 class="font-serif text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mt-2 mb-3">Chicken Roast</h2>
+            <div class="gold-bar mx-auto"></div>
+        </div>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+            <div>
+                <div class="rounded-3xl overflow-hidden shadow-2xl h-80 bg-gradient-to-br from-orange-800 to-amber-900 relative flex items-center justify-center">
+                    <img src="https://plus.unsplash.com/premium_photo-1661419883163-bb4df1c10109?w=1200&auto=format&fit=crop&q=85"
+                         alt="Chicken Roast" class="detail-img w-full h-full object-cover"
+                         onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
+                    <div class="text-8xl hidden">🍗</div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                </div>
+                <div class="grid grid-cols-3 gap-4 mt-5">
+                    <div class="bg-gray-50 dark:bg-gray-800 rounded-2xl p-4 text-center shadow-sm"><p class="text-xl mb-1">⏱</p><p class="font-semibold text-sm text-gray-800 dark:text-white">1.5 hrs</p><p class="text-gray-400 text-xs">Cook Time</p></div>
+                    <div class="bg-gray-50 dark:bg-gray-800 rounded-2xl p-4 text-center shadow-sm"><p class="text-xl mb-1">👥</p><p class="font-semibold text-sm text-gray-800 dark:text-white">4</p><p class="text-gray-400 text-xs">Servings</p></div>
+                    <div class="bg-gray-50 dark:bg-gray-800 rounded-2xl p-4 text-center shadow-sm"><p class="text-xl mb-1">🌶</p><p class="font-semibold text-sm text-gray-800 dark:text-white">Mild-Med</p><p class="text-gray-400 text-xs">Spice</p></div>
+                </div>
+                <div class="mt-7">
+                    <h4 class="font-serif text-2xl font-bold text-gray-900 dark:text-white mb-4">Ingredients</h4>
+                    <div class="bg-eid-light dark:bg-gray-800 rounded-2xl p-6 grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        <p class="ing-item text-gray-600 dark:text-gray-300 text-sm py-1 border-b border-gray-200 dark:border-gray-700">1 whole chicken (cut into 8)</p>
+                        <p class="ing-item text-gray-600 dark:text-gray-300 text-sm py-1 border-b border-gray-200 dark:border-gray-700">1 cup yoghurt</p>
+                        <p class="ing-item text-gray-600 dark:text-gray-300 text-sm py-1 border-b border-gray-200 dark:border-gray-700">2 tbsp ginger-garlic paste</p>
+                        <p class="ing-item text-gray-600 dark:text-gray-300 text-sm py-1 border-b border-gray-200 dark:border-gray-700">1 tsp turmeric</p>
+                        <p class="ing-item text-gray-600 dark:text-gray-300 text-sm py-1 border-b border-gray-200 dark:border-gray-700">2 tsp roast masala</p>
+                        <p class="ing-item text-gray-600 dark:text-gray-300 text-sm py-1 border-b border-gray-200 dark:border-gray-700">2 large onions, sliced</p>
+                        <p class="ing-item text-gray-600 dark:text-gray-300 text-sm py-1 border-b border-gray-200 dark:border-gray-700">3 tbsp oil or ghee</p>
+                        <p class="ing-item text-gray-600 dark:text-gray-300 text-sm py-1">Sugar 1 tsp, salt to taste</p>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <h4 class="font-serif text-2xl font-bold text-gray-900 dark:text-white mb-6">Instructions</h4>
+                <ol class="space-y-5">
+                    <li class="flex gap-4"><div class="step-circle rounded-full bg-eid-gold text-eid-darker font-bold text-sm flex items-center justify-center shrink-0">1</div><div class="bg-gray-50 dark:bg-gray-800 rounded-2xl p-4 flex-1"><h5 class="font-semibold text-gray-800 dark:text-white text-sm mb-1">Score & Marinate</h5><p class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed">Score the chicken pieces deeply. Mix with yoghurt, ginger-garlic, turmeric, roast masala, and salt. Marinate 2–3 hours.</p></div></li>
+                    <li class="flex gap-4"><div class="step-circle rounded-full bg-eid-gold text-eid-darker font-bold text-sm flex items-center justify-center shrink-0">2</div><div class="bg-gray-50 dark:bg-gray-800 rounded-2xl p-4 flex-1"><h5 class="font-semibold text-gray-800 dark:text-white text-sm mb-1">Fry Onions</h5><p class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed">Fry sliced onions in ghee until deep golden-brown. Remove half for garnish, leave half in pot.</p></div></li>
+                    <li class="flex gap-4"><div class="step-circle rounded-full bg-eid-gold text-eid-darker font-bold text-sm flex items-center justify-center shrink-0">3</div><div class="bg-gray-50 dark:bg-gray-800 rounded-2xl p-4 flex-1"><h5 class="font-semibold text-gray-800 dark:text-white text-sm mb-1">Cook Chicken</h5><p class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed">Add marinated chicken to the pot. Cook on medium-high, turning, until the marinade dries and chicken starts to brown, about 25 minutes.</p></div></li>
+                    <li class="flex gap-4"><div class="step-circle rounded-full bg-eid-gold text-eid-darker font-bold text-sm flex items-center justify-center shrink-0">4</div><div class="bg-gray-50 dark:bg-gray-800 rounded-2xl p-4 flex-1"><h5 class="font-semibold text-gray-800 dark:text-white text-sm mb-1">Finish & Glaze</h5><p class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed">Add 1 tsp sugar and a splash of water. Cover and cook 15 min until oil separates and a thick, shiny masala coats the chicken. Garnish with reserved onions.</p></div></li>
+                </ol>
+                <div class="mt-7 border-l-4 border-eid-gold bg-eid-goldlight dark:bg-eid-gold/10 rounded-r-2xl p-5">
+                    <p class="text-eid-green dark:text-eid-gold font-semibold text-sm mb-1">💡 Chef's Tip</p>
+                    <p class="text-gray-600 dark:text-gray-300 text-sm">The sugar is key — it gives the chicken roast its signature glossy, slightly caramelised finish that sets the Bangladeshi version apart.</p>
+                </div>
+                <div class="mt-5 text-right"><a href="#recipes" class="text-eid-gold hover:text-eid-green text-sm font-medium transition-colors">← Back to all recipes</a></div>
+            </div>
+        </div>
+    </div>
+</section>
+ 
+<section id="detail-shemai" class="py-20 bg-gray-50 dark:bg-eid-dark border-b border-gray-100 dark:border-gray-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <span class="text-eid-gold font-semibold text-sm uppercase tracking-widest">Recipe Detail</span>
+            <h2 class="font-serif text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mt-2 mb-3">Shemai</h2>
+            <div class="gold-bar mx-auto"></div>
+        </div>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+            <div>
+                <div class="rounded-3xl overflow-hidden shadow-2xl h-80 bg-gradient-to-br from-amber-100 to-amber-400 relative flex items-center justify-center">
+                    <img src="https://images.unsplash.com/photo-1722032393693-691b59565eaf?w=1200&auto=format&fit=crop&q=85"
+                         alt="Shemai" class="detail-img w-full h-full object-cover"
+                         onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
+                    <div class="text-8xl hidden">🍜</div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                </div>
+                <div class="grid grid-cols-3 gap-4 mt-5">
+                    <div class="bg-white dark:bg-gray-800 rounded-2xl p-4 text-center shadow-sm"><p class="text-xl mb-1">⏱</p><p class="font-semibold text-sm text-gray-800 dark:text-white">30 mins</p><p class="text-gray-400 text-xs">Cook Time</p></div>
+                    <div class="bg-white dark:bg-gray-800 rounded-2xl p-4 text-center shadow-sm"><p class="text-xl mb-1">👥</p><p class="font-semibold text-sm text-gray-800 dark:text-white">4–6</p><p class="text-gray-400 text-xs">Servings</p></div>
+                    <div class="bg-white dark:bg-gray-800 rounded-2xl p-4 text-center shadow-sm"><p class="text-xl mb-1">🍬</p><p class="font-semibold text-sm text-gray-800 dark:text-white">Sweet</p><p class="text-gray-400 text-xs">Flavour</p></div>
+                </div>
+                <div class="mt-7">
+                    <h4 class="font-serif text-2xl font-bold text-gray-900 dark:text-white mb-4">Ingredients</h4>
+                    <div class="bg-eid-light dark:bg-gray-800 rounded-2xl p-6 grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        <p class="ing-item text-gray-600 dark:text-gray-300 text-sm py-1 border-b border-gray-200 dark:border-gray-700">200g thin shemai vermicelli</p>
+                        <p class="ing-item text-gray-600 dark:text-gray-300 text-sm py-1 border-b border-gray-200 dark:border-gray-700">1 litre full-fat milk</p>
+                        <p class="ing-item text-gray-600 dark:text-gray-300 text-sm py-1 border-b border-gray-200 dark:border-gray-700">¾ cup sugar (adjust to taste)</p>
+                        <p class="ing-item text-gray-600 dark:text-gray-300 text-sm py-1 border-b border-gray-200 dark:border-gray-700">3 tbsp ghee</p>
+                        <p class="ing-item text-gray-600 dark:text-gray-300 text-sm py-1 border-b border-gray-200 dark:border-gray-700">4 green cardamom pods</p>
+                        <p class="ing-item text-gray-600 dark:text-gray-300 text-sm py-1 border-b border-gray-200 dark:border-gray-700">2 tbsp raisins</p>
+                        <p class="ing-item text-gray-600 dark:text-gray-300 text-sm py-1 border-b border-gray-200 dark:border-gray-700">¼ cup cashews + almonds</p>
+                        <p class="ing-item text-gray-600 dark:text-gray-300 text-sm py-1">1 tsp rose water</p>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <h4 class="font-serif text-2xl font-bold text-gray-900 dark:text-white mb-6">Instructions</h4>
+                <ol class="space-y-5">
+                    <li class="flex gap-4"><div class="step-circle rounded-full bg-eid-gold text-eid-darker font-bold text-sm flex items-center justify-center shrink-0">1</div><div class="bg-eid-light dark:bg-gray-800 rounded-2xl p-4 flex-1"><h5 class="font-semibold text-gray-800 dark:text-white text-sm mb-1">Toast the Vermicelli</h5><p class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed">In a heavy pan, melt 2 tbsp ghee over medium heat. Add shemai and stir continuously until it turns golden brown and fragrant, about 5–7 minutes.</p></div></li>
+                    <li class="flex gap-4"><div class="step-circle rounded-full bg-eid-gold text-eid-darker font-bold text-sm flex items-center justify-center shrink-0">2</div><div class="bg-eid-light dark:bg-gray-800 rounded-2xl p-4 flex-1"><h5 class="font-semibold text-gray-800 dark:text-white text-sm mb-1">Fry Nuts & Raisins</h5><p class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed">In remaining ghee, fry cashews and raisins until raisins puff and nuts are golden. Set aside for garnish.</p></div></li>
+                    <li class="flex gap-4"><div class="step-circle rounded-full bg-eid-gold text-eid-darker font-bold text-sm flex items-center justify-center shrink-0">3</div><div class="bg-eid-light dark:bg-gray-800 rounded-2xl p-4 flex-1"><h5 class="font-semibold text-gray-800 dark:text-white text-sm mb-1">Simmer in Milk</h5><p class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed">Add warm milk and cardamom to the toasted shemai. Cook on medium-low, stirring often, until vermicelli is soft and milk thickens, about 15–18 minutes.</p></div></li>
+                    <li class="flex gap-4"><div class="step-circle rounded-full bg-eid-gold text-eid-darker font-bold text-sm flex items-center justify-center shrink-0">4</div><div class="bg-eid-light dark:bg-gray-800 rounded-2xl p-4 flex-1"><h5 class="font-semibold text-gray-800 dark:text-white text-sm mb-1">Sweeten & Serve</h5><p class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed">Add sugar and rose water, stir and cook 3 more minutes. Serve warm or at room temperature, topped with fried nuts and raisins.</p></div></li>
+                </ol>
+                <div class="mt-7 border-l-4 border-eid-gold bg-eid-goldlight dark:bg-eid-gold/10 rounded-r-2xl p-5">
+                    <p class="text-eid-green dark:text-eid-gold font-semibold text-sm mb-1">💡 Chef's Tip</p>
+                    <p class="text-gray-600 dark:text-gray-300 text-sm">Always toast the shemai in ghee before adding milk — this prevents it from becoming mushy and gives the dish its signature nutty aroma.</p>
+                </div>
+                <div class="mt-5 text-right"><a href="#recipes" class="text-eid-gold hover:text-eid-green text-sm font-medium transition-colors">← Back to all recipes</a></div>
+            </div>
+        </div>
+    </div>
+</section>
+ 
+<section id="detail-firni" class="py-20 bg-white dark:bg-eid-darker border-b border-gray-100 dark:border-gray-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <span class="text-eid-gold font-semibold text-sm uppercase tracking-widest">Recipe Detail</span>
+            <h2 class="font-serif text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mt-2 mb-3">Firni</h2>
+            <div class="gold-bar mx-auto"></div>
+        </div>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+            <div>
+                <div class="rounded-3xl overflow-hidden shadow-2xl h-80 bg-gradient-to-br from-amber-50 to-yellow-100 relative flex items-center justify-center">
+                    <img src="https://images.unsplash.com/photo-1590055619273-44b5b6ce52e8?w=1200&auto=format&fit=crop&q=85"
+                         alt="Firni" class="detail-img w-full h-full object-cover"
+                         onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
+                    <div class="text-8xl hidden">🥣</div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                </div>
+                <div class="grid grid-cols-3 gap-4 mt-5">
+                    <div class="bg-gray-50 dark:bg-gray-800 rounded-2xl p-4 text-center shadow-sm"><p class="text-xl mb-1">⏱</p><p class="font-semibold text-sm text-gray-800 dark:text-white">1hr+chill</p><p class="text-gray-400 text-xs">Total Time</p></div>
+                    <div class="bg-gray-50 dark:bg-gray-800 rounded-2xl p-4 text-center shadow-sm"><p class="text-xl mb-1">👥</p><p class="font-semibold text-sm text-gray-800 dark:text-white">6</p><p class="text-gray-400 text-xs">Servings</p></div>
+                    <div class="bg-gray-50 dark:bg-gray-800 rounded-2xl p-4 text-center shadow-sm"><p class="text-xl mb-1">❄️</p><p class="font-semibold text-sm text-gray-800 dark:text-white">Chilled</p><p class="text-gray-400 text-xs">Served</p></div>
+                </div>
+                <div class="mt-7">
+                    <h4 class="font-serif text-2xl font-bold text-gray-900 dark:text-white mb-4">Ingredients</h4>
+                    <div class="bg-eid-light dark:bg-gray-800 rounded-2xl p-6 grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        <p class="ing-item text-gray-600 dark:text-gray-300 text-sm py-1 border-b border-gray-200 dark:border-gray-700">1 litre full-fat milk</p>
+                        <p class="ing-item text-gray-600 dark:text-gray-300 text-sm py-1 border-b border-gray-200 dark:border-gray-700">3 tbsp rice flour (or ground raw rice)</p>
+                        <p class="ing-item text-gray-600 dark:text-gray-300 text-sm py-1 border-b border-gray-200 dark:border-gray-700">¾ cup sugar</p>
+                        <p class="ing-item text-gray-600 dark:text-gray-300 text-sm py-1 border-b border-gray-200 dark:border-gray-700">A generous pinch of saffron</p>
+                        <p class="ing-item text-gray-600 dark:text-gray-300 text-sm py-1 border-b border-gray-200 dark:border-gray-700">1 tsp rose water</p>
+                        <p class="ing-item text-gray-600 dark:text-gray-300 text-sm py-1 border-b border-gray-200 dark:border-gray-700">4 cardamom pods, ground</p>
+                        <p class="ing-item text-gray-600 dark:text-gray-300 text-sm py-1 border-b border-gray-200 dark:border-gray-700">2 tbsp crushed pistachios</p>
+                        <p class="ing-item text-gray-600 dark:text-gray-300 text-sm py-1">Dried rose petals for garnish</p>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <h4 class="font-serif text-2xl font-bold text-gray-900 dark:text-white mb-6">Instructions</h4>
+                <ol class="space-y-5">
+                    <li class="flex gap-4"><div class="step-circle rounded-full bg-eid-gold text-eid-darker font-bold text-sm flex items-center justify-center shrink-0">1</div><div class="bg-gray-50 dark:bg-gray-800 rounded-2xl p-4 flex-1"><h5 class="font-semibold text-gray-800 dark:text-white text-sm mb-1">Infuse Saffron</h5><p class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed">Warm 2 tbsp of the milk and steep saffron in it for 10 minutes until the milk turns deep golden yellow.</p></div></li>
+                    <li class="flex gap-4"><div class="step-circle rounded-full bg-eid-gold text-eid-darker font-bold text-sm flex items-center justify-center shrink-0">2</div><div class="bg-gray-50 dark:bg-gray-800 rounded-2xl p-4 flex-1"><h5 class="font-semibold text-gray-800 dark:text-white text-sm mb-1">Make Rice Slurry</h5><p class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed">Mix rice flour with ½ cup cold milk until smooth with no lumps. Set aside.</p></div></li>
+                    <li class="flex gap-4"><div class="step-circle rounded-full bg-eid-gold text-eid-darker font-bold text-sm flex items-center justify-center shrink-0">3</div><div class="bg-gray-50 dark:bg-gray-800 rounded-2xl p-4 flex-1"><h5 class="font-semibold text-gray-800 dark:text-white text-sm mb-1">Cook on Gentle Heat</h5><p class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed">Bring remaining milk to a gentle boil with cardamom. Add the rice slurry slowly while stirring constantly. Cook on low heat 20–25 minutes until thick and creamy.</p></div></li>
+                    <li class="flex gap-4"><div class="step-circle rounded-full bg-eid-gold text-eid-darker font-bold text-sm flex items-center justify-center shrink-0">4</div><div class="bg-gray-50 dark:bg-gray-800 rounded-2xl p-4 flex-1"><h5 class="font-semibold text-gray-800 dark:text-white text-sm mb-1">Set & Chill</h5><p class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed">Stir in sugar, saffron milk, and rose water. Pour into individual bowls (earthen pots look stunning). Refrigerate at least 3 hours. Garnish with pistachios and dried rose petals before serving.</p></div></li>
+                </ol>
+                <div class="mt-7 border-l-4 border-eid-gold bg-eid-goldlight dark:bg-eid-gold/10 rounded-r-2xl p-5">
+                    <p class="text-eid-green dark:text-eid-gold font-semibold text-sm mb-1">💡 Chef's Tip</p>
+                    <p class="text-gray-600 dark:text-gray-300 text-sm">Never stop stirring while the milk thickens — it prevents scorching and gives firni its signature glass-smooth texture. Serve in clay bowls for authenticity.</p>
+                </div>
+                <div class="mt-5 text-right"><a href="#recipes" class="text-eid-gold hover:text-eid-green text-sm font-medium transition-colors">← Back to all recipes</a></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="about" class="py-20 md:py-28 bg-eid-green dark:bg-black text-white relative overflow-hidden">
+    <div class="absolute inset-0 geo-overlay opacity-30 pointer-events-none" style="background-image:url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2260%22 height=%2260%22%3E%3Cpath d=%22M30 0L60 30L30 60L0 30Z%22 fill=%22none%22 stroke=%22%23d4af3715%22 stroke-width=%221%22/%3E%3C/svg%3E')"></div>
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+        <p class="text-eid-gold font-semibold text-sm uppercase tracking-widest mb-3">Our Story</p>
+        <h2 class="font-serif text-4xl md:text-5xl font-bold mb-6">Ramadan, Eid &amp; This Journey</h2>
+        <div class="gold-bar mx-auto mb-8"></div>
+        <p class="text-lg md:text-xl font-light leading-relaxed text-gray-200 mb-6">
+            Eid is a time of joy, gratitude, and coming together with loved ones. Naturally, food plays a central role — symbolizing abundance, love, and celebration passed down through generations.
+        </p>
+        <p class="text-base text-gray-300 mb-10 leading-relaxed">
+            From morning sweets like Shemai to grand feasts featuring aromatic Biryani and rich Rezala, traditional Eid recipes carry our heritage, keeping family bonds alive across time and borders.
+        </p>
+        <p class="text-base text-gray-300 mb-10 leading-relaxed">
+            This webpage was inspired by the learning journey at Programming Hero, where creativity meets coding. I am Rifat, and I created this webpage to blend tradition with modern web design.
+        </p>            
+        <a href="#recipes" class="btn-gold text-white font-semibold px-8 py-3.5 rounded-full shadow-lg text-sm inline-block">Explore All Recipes ↑</a>
+    </div>
+</section>
+
+<footer class="bg-gray-900 dark:bg-eid-darker text-gray-300 pt-14 pb-8 border-t border-gray-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-10 pb-10 border-b border-gray-800">
+
+            <div>
+                <div class="flex items-center gap-1 mb-4">
+                    <span class="text-eid-gold text-3xl leading-none" style="font-family:'Playfair Display',serif;">☽</span>
+                    <span class="font-serif font-bold text-2xl tracking-wide text-white ml-1">Eid</span>
+                    <span class="font-serif font-bold text-2xl tracking-wide text-eid-gold ml-1">Recipes</span>
+                </div>
+                <p class="text-gray-400 text-sm leading-relaxed">Celebrating the joy of Eid through food, family, and timeless tradition — straight from the heart of Bangladesh.</p>
+            </div>
+
+            <div>
+                <h4 class="text-eid-gold font-semibold text-sm uppercase tracking-wider mb-4">Quick Links</h4>
+                <ul class="space-y-2">
+                    <li><a href="#home"            class="text-gray-400 hover:text-eid-gold text-sm transition-colors">Home</a></li>
+                    <li><a href="#recipes"         class="text-gray-400 hover:text-eid-gold text-sm transition-colors">All Recipes</a></li>
+                    <li><a href="#about"           class="text-gray-400 hover:text-eid-gold text-sm transition-colors">About</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="text-eid-gold font-semibold text-sm uppercase tracking-wider mb-4">Follow Along</h4>
+                <div class="flex flex-wrap gap-3 mb-5">
+                    <a href="https://www.facebook.com/shamsurrahmanrifatbd/" aria-label="Facebook"  class="flex items-center gap-2 bg-gray-800 hover:bg-eid-gold hover:text-eid-darker text-gray-300 text-xs font-medium px-4 py-2 rounded-full transition-all duration-300">
+                        <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+                        Facebook
+                    </a>
+                    <a href="https://www.instagram.com/shamsur_rahman__rifat/" aria-label="Instagram" class="flex items-center gap-2 bg-gray-800 hover:bg-eid-gold hover:text-eid-darker text-gray-300 text-xs font-medium px-4 py-2 rounded-full transition-all duration-300">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+                        Instagram
+                    </a>
+                    <a href="https://www.youtube.com/@shamsurrahmanrifatbd" aria-label="YouTube"   class="flex items-center gap-2 bg-gray-800 hover:bg-eid-gold hover:text-eid-darker text-gray-300 text-xs font-medium px-4 py-2 rounded-full transition-all duration-300">
+                        <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 00-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 00-1.95 1.96A29 29 0 001 12a29 29 0 00.46 5.58 2.78 2.78 0 001.95 1.95C5.12 20 12 20 12 20s6.88 0 8.59-.47a2.78 2.78 0 001.95-1.95A29 29 0 0023 12a29 29 0 00-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="white"/></svg>
+                        YouTube
+                    </a>
+                    <a href="https://x.com/srrifatbd" aria-label="Twitter/X" class="flex items-center gap-2 bg-gray-800 hover:bg-eid-gold hover:text-eid-darker text-gray-300 text-xs font-medium px-4 py-2 rounded-full transition-all duration-300">
+                        <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.747l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                        Twitter / X
+                    </a>
+                    <a href="https://bd.linkedin.com/in/shamsurrahmanrifat" aria-label="LinkedIn" class="flex items-center gap-2 bg-gray-800 hover:bg-eid-gold hover:text-eid-darker text-gray-300 text-xs font-medium px-4 py-2 rounded-full transition-all duration-300">
+                        <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M20.447 20.452H17.21v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.084V9h3.112v1.561h.045c.434-.823 1.494-1.692 3.073-1.692 3.287 0 3.893 2.164 3.893 4.977v6.606zM5.337 7.433a1.804 1.804 0 110-3.609 1.804 1.804 0 010 3.609zM6.798 20.452H3.873V9h2.925v11.452z"/>
+                        </svg>
+                        LinkedIn
+                    </a>
+                    <a href="https://www.pinterest.com/shamsurrahmanrifat/" aria-label="Pinterest" class="flex items-center gap-2 bg-gray-800 hover:bg-eid-gold hover:text-eid-darker text-gray-300 text-xs font-medium px-4 py-2 rounded-full transition-all duration-300">
+                        <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2C6.477 2 2 6.477 2 12c0 4.084 2.438 7.593 5.938 9.156-.082-.778-.156-1.973.033-2.824.17-.768 1.096-4.893 1.096-4.893s-.28-.56-.28-1.389c0-1.3.754-2.27 1.692-2.27.798 0 1.183.6 1.183 1.32 0 .804-.512 2.006-.776 3.122-.22.928.466 1.684 1.38 1.684 1.656 0 2.93-1.746 2.93-4.266 0-2.23-1.603-3.79-3.89-3.79-2.65 0-4.205 1.988-4.205 4.04 0 .8.308 1.658.693 2.125a.279.279 0 01.064.266c-.07.293-.226.928-.257 1.056-.04.17-.13.206-.3.124-1.12-.52-1.82-2.154-1.82-3.467 0-2.824 2.053-5.42 5.916-5.42 3.106 0 5.523 2.213 5.523 5.17 0 3.087-1.947 5.573-4.65 5.573-.908 0-1.763-.472-2.055-1.03l-.558 2.124c-.202.776-.748 1.747-1.114 2.34.838.259 1.722.4 2.646.4 5.523 0 10-4.477 10-10S17.523 2 12 2z"/>
+                        </svg>
+                        Pinterest
+                    </a>                   
+                </div>
+                <p class="text-gray-500 text-xs">Share your Eid cooking with <span class="text-eid-gold">#EidRecipes</span></p>
+            </div>
+        </div>
+
+        <div class="pt-7 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-gray-500">
+            <p>© 2026 Eid Recipes. Made with ❤️ by <a href="https://iamrifat.vercel.app/">Shamsur Rahman Rifat</a></p>
+            <p class="text-eid-gold font-serif italic">عيد مبارك — Eid Mubarak</p>
+        </div>
+    </div>
+</footer>
+
+<script>
+    const html = document.documentElement;
+    const syncIcons = () => {
+        const dark = html.classList.contains('dark');
+        document.getElementById('darkIcon').textContent      = dark ? '☀️' : '🌙';
+        document.getElementById('darkIconMobile').textContent = dark ? '☀️' : '🌙';
+    };
+    if (localStorage.getItem('color-theme') === 'dark' ||
+        (!localStorage.getItem('color-theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        html.classList.add('dark');
+    }
+    syncIcons();
+    const toggleDark = () => {
+        html.classList.toggle('dark');
+        localStorage.setItem('color-theme', html.classList.contains('dark') ? 'dark' : 'light');
+        syncIcons();
+    };
+    document.getElementById('darkToggle').addEventListener('click', toggleDark);
+    document.getElementById('darkToggleMobile').addEventListener('click', toggleDark);
+
+    const menuBtn   = document.getElementById('menuBtn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const iconOpen  = document.getElementById('iconOpen');
+    const iconClose = document.getElementById('iconClose');
+    menuBtn.addEventListener('click', () => {
+        mobileMenu.classList.toggle('open');
+        iconOpen.classList.toggle('hidden');
+        iconClose.classList.toggle('hidden');
+    });
+    document.querySelectorAll('#mobile-menu a').forEach(l => l.addEventListener('click', () => {
+        mobileMenu.classList.remove('open');
+        iconOpen.classList.remove('hidden');
+        iconClose.classList.add('hidden');
+    }));
+
+    document.querySelectorAll('img[onerror]').forEach(img => {
+        img.addEventListener('error', function() {
+            this.style.display = 'none';
+            const fb = this.nextElementSibling;
+            if (fb) fb.style.display = 'flex';
+        });
+    });
+</script>
+</body>
+</html>
